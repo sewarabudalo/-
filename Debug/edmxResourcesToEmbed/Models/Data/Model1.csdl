@@ -1,0 +1,501 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MalaffiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="C__MigrationHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+    <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetRole">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUserClaim">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUserLogin">
+    <Key>
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+    <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+    <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+    <NavigationProperty Name="Doctors" Relationship="Self.FK_Doctor_AspNetUsers" FromRole="AspNetUsers" ToRole="Doctor" />
+    <NavigationProperty Name="Patients" Relationship="Self.FK_Patient_AspNetUsers" FromRole="AspNetUsers" ToRole="Patient" />
+    <NavigationProperty Name="Pharmacists" Relationship="Self.FK_Pharmacist_AspNetUsers" FromRole="AspNetUsers" ToRole="Pharmacist" />
+    <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+    <NavigationProperty Name="LabTechnicians" Relationship="MalaffiModel.FK_LabTechnician_AspNetUsers" FromRole="AspNetUser" ToRole="LabTechnician" />
+  </EntityType>
+  <EntityType Name="Doctor">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="AssociationId" Type="Int32" Nullable="false" />
+    <Property Name="FullName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="MedicaSpecializationId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="AspNetUser" Relationship="Self.FK_Doctor_AspNetUsers" FromRole="Doctor" ToRole="AspNetUsers" />
+    <NavigationProperty Name="MedicaSpecializationType" Relationship="Self.FK_Doctor_MedicaSpecializationType" FromRole="Doctor" ToRole="MedicaSpecializationType" />
+    <NavigationProperty Name="MedicineRequests" Relationship="Self.FK_MedicineRequest_Doctor" FromRole="Doctor" ToRole="MedicineRequest" />
+    <NavigationProperty Name="Reviews" Relationship="Self.FK_Review_Doctor" FromRole="Doctor" ToRole="Review" />
+    <NavigationProperty Name="Tests" Relationship="Self.FK_Test_Doctor" FromRole="Doctor" ToRole="Test" />
+  </EntityType>
+  <EntityType Name="MedicaSpecializationType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Category" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Doctors" Relationship="Self.FK_Doctor_MedicaSpecializationType" FromRole="MedicaSpecializationType" ToRole="Doctor" />
+    <NavigationProperty Name="LabTechnicians" Relationship="MalaffiModel.FK_LabTechnician_MedicaSpecializationType" FromRole="MedicaSpecializationType" ToRole="LabTechnician" />
+  </EntityType>
+  <EntityType Name="Medicine">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="MedicineRequests" Relationship="Self.FK_MedicineRequest_Medicine" FromRole="Medicine" ToRole="MedicineRequest" />
+  </EntityType>
+  <EntityType Name="MedicineRequest">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PatientId" Type="Int32" Nullable="false" />
+    <Property Name="DoctorId" Type="Int32" Nullable="false" />
+    <Property Name="TotalQuantity" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PerDayQuantity" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PharmacistId" Type="Int32" />
+    <Property Name="MedicineId" Type="Int32" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Status" Type="Int32" />
+    <NavigationProperty Name="Doctor" Relationship="Self.FK_MedicineRequest_Doctor" FromRole="MedicineRequest" ToRole="Doctor" />
+    <NavigationProperty Name="Medicine" Relationship="Self.FK_MedicineRequest_Medicine" FromRole="MedicineRequest" ToRole="Medicine" />
+    <NavigationProperty Name="Patient" Relationship="Self.FK_MedicineRequest_Patient" FromRole="MedicineRequest" ToRole="Patient" />
+    <NavigationProperty Name="Pharmacist" Relationship="Self.FK_MedicineRequest_Pharmacist" FromRole="MedicineRequest" ToRole="Pharmacist" />
+  </EntityType>
+  <EntityType Name="Patient">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="FullName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DBO" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Gender" Type="Int32" Nullable="false" />
+    <Property Name="NationalNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUser" Relationship="Self.FK_Patient_AspNetUsers" FromRole="Patient" ToRole="AspNetUsers" />
+    <NavigationProperty Name="MedicineRequests" Relationship="Self.FK_MedicineRequest_Patient" FromRole="Patient" ToRole="MedicineRequest" />
+    <NavigationProperty Name="Reviews" Relationship="Self.FK_Review_Patient" FromRole="Patient" ToRole="Review" />
+    <NavigationProperty Name="Tests" Relationship="Self.FK_Test_Patient" FromRole="Patient" ToRole="Test" />
+  </EntityType>
+  <EntityType Name="Pharmacist">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CommercialRegistrationNo" Type="Int32" Nullable="false" />
+    <Property Name="FullName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUser" Relationship="Self.FK_Pharmacist_AspNetUsers" FromRole="Pharmacist" ToRole="AspNetUsers" />
+    <NavigationProperty Name="MedicineRequests" Relationship="Self.FK_MedicineRequest_Pharmacist" FromRole="Pharmacist" ToRole="MedicineRequest" />
+  </EntityType>
+  <EntityType Name="Review">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PatientId" Type="Int32" Nullable="false" />
+    <Property Name="DoctorId" Type="Int32" Nullable="false" />
+    <Property Name="ReviewDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <Property Name="Diagnosis" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Doctor" Relationship="Self.FK_Review_Doctor" FromRole="Review" ToRole="Doctor" />
+    <NavigationProperty Name="Patient" Relationship="Self.FK_Review_Patient" FromRole="Review" ToRole="Patient" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Test">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DoctorId" Type="Int32" Nullable="false" />
+    <Property Name="PatientId" Type="Int32" Nullable="false" />
+    <Property Name="LabTechnicianId" Type="Int32" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="IsDownloaded" Type="Boolean" Nullable="false" />
+    <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Doctor" Relationship="Self.FK_Test_Doctor" FromRole="Test" ToRole="Doctor" />
+    <NavigationProperty Name="Patient" Relationship="Self.FK_Test_Patient" FromRole="Test" ToRole="Patient" />
+    <NavigationProperty Name="LabTechnician" Relationship="MalaffiModel.FK_Test_LabTechnician" FromRole="Test" ToRole="LabTechnician" />
+  </EntityType>
+  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserClaims" Type="Self.AspNetUserClaim" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserClaims">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserLogins" Type="Self.AspNetUserLogin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserLogins">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Doctor_AspNetUsers">
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
+    <End Role="Doctor" Type="Self.Doctor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Doctor">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Patient_AspNetUsers">
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
+    <End Role="Patient" Type="Self.Patient" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Patient">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Pharmacist_AspNetUsers">
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
+    <End Role="Pharmacist" Type="Self.Pharmacist" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Pharmacist">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Doctor_MedicaSpecializationType">
+    <End Role="MedicaSpecializationType" Type="Self.MedicaSpecializationType" Multiplicity="1" />
+    <End Role="Doctor" Type="Self.Doctor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MedicaSpecializationType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Doctor">
+        <PropertyRef Name="MedicaSpecializationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MedicineRequest_Doctor">
+    <End Role="Doctor" Type="Self.Doctor" Multiplicity="1" />
+    <End Role="MedicineRequest" Type="Self.MedicineRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Doctor">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MedicineRequest">
+        <PropertyRef Name="DoctorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Review_Doctor">
+    <End Role="Doctor" Type="Self.Doctor" Multiplicity="1" />
+    <End Role="Review" Type="Self.Review" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Doctor">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Review">
+        <PropertyRef Name="DoctorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Test_Doctor">
+    <End Role="Doctor" Type="Self.Doctor" Multiplicity="1" />
+    <End Role="Test" Type="Self.Test" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Doctor">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Test">
+        <PropertyRef Name="DoctorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MedicineRequest_Medicine">
+    <End Role="Medicine" Type="Self.Medicine" Multiplicity="1" />
+    <End Role="MedicineRequest" Type="Self.MedicineRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Medicine">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MedicineRequest">
+        <PropertyRef Name="MedicineId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MedicineRequest_Patient">
+    <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
+    <End Role="MedicineRequest" Type="Self.MedicineRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MedicineRequest">
+        <PropertyRef Name="PatientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MedicineRequest_Pharmacist">
+    <End Role="Pharmacist" Type="Self.Pharmacist" Multiplicity="0..1" />
+    <End Role="MedicineRequest" Type="Self.MedicineRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pharmacist">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MedicineRequest">
+        <PropertyRef Name="PharmacistId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Review_Patient">
+    <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
+    <End Role="Review" Type="Self.Review" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Review">
+        <PropertyRef Name="PatientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Test_Patient">
+    <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
+    <End Role="Test" Type="Self.Test" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Test">
+        <PropertyRef Name="PatientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AspNetUserRoles">
+    <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="MalaffiEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+    <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
+    <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
+    <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
+    <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
+    <EntitySet Name="Doctors" EntityType="Self.Doctor" />
+    <EntitySet Name="MedicaSpecializationTypes" EntityType="Self.MedicaSpecializationType" />
+    <EntitySet Name="Medicines" EntityType="Self.Medicine" />
+    <EntitySet Name="MedicineRequests" EntityType="Self.MedicineRequest" />
+    <EntitySet Name="Patients" EntityType="Self.Patient" />
+    <EntitySet Name="Pharmacists" EntityType="Self.Pharmacist" />
+    <EntitySet Name="Reviews" EntityType="Self.Review" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="Tests" EntityType="Self.Test" />
+    <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Doctor_AspNetUsers" Association="Self.FK_Doctor_AspNetUsers">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="Doctor" EntitySet="Doctors" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Patient_AspNetUsers" Association="Self.FK_Patient_AspNetUsers">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="Patient" EntitySet="Patients" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Pharmacist_AspNetUsers" Association="Self.FK_Pharmacist_AspNetUsers">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="Pharmacist" EntitySet="Pharmacists" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Doctor_MedicaSpecializationType" Association="Self.FK_Doctor_MedicaSpecializationType">
+      <End Role="MedicaSpecializationType" EntitySet="MedicaSpecializationTypes" />
+      <End Role="Doctor" EntitySet="Doctors" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MedicineRequest_Doctor" Association="Self.FK_MedicineRequest_Doctor">
+      <End Role="Doctor" EntitySet="Doctors" />
+      <End Role="MedicineRequest" EntitySet="MedicineRequests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Review_Doctor" Association="Self.FK_Review_Doctor">
+      <End Role="Doctor" EntitySet="Doctors" />
+      <End Role="Review" EntitySet="Reviews" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Test_Doctor" Association="Self.FK_Test_Doctor">
+      <End Role="Doctor" EntitySet="Doctors" />
+      <End Role="Test" EntitySet="Tests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MedicineRequest_Medicine" Association="Self.FK_MedicineRequest_Medicine">
+      <End Role="Medicine" EntitySet="Medicines" />
+      <End Role="MedicineRequest" EntitySet="MedicineRequests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MedicineRequest_Patient" Association="Self.FK_MedicineRequest_Patient">
+      <End Role="Patient" EntitySet="Patients" />
+      <End Role="MedicineRequest" EntitySet="MedicineRequests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MedicineRequest_Pharmacist" Association="Self.FK_MedicineRequest_Pharmacist">
+      <End Role="Pharmacist" EntitySet="Pharmacists" />
+      <End Role="MedicineRequest" EntitySet="MedicineRequests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Review_Patient" Association="Self.FK_Review_Patient">
+      <End Role="Patient" EntitySet="Patients" />
+      <End Role="Review" EntitySet="Reviews" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Test_Patient" Association="Self.FK_Test_Patient">
+      <End Role="Patient" EntitySet="Patients" />
+      <End Role="Test" EntitySet="Tests" />
+    </AssociationSet>
+    <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
+      <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+    </AssociationSet>
+    <EntitySet Name="LabTechnicians" EntityType="MalaffiModel.LabTechnician" />
+    <AssociationSet Name="FK_LabTechnician_AspNetUsers" Association="MalaffiModel.FK_LabTechnician_AspNetUsers">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="LabTechnician" EntitySet="LabTechnicians" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LabTechnician_MedicaSpecializationType" Association="MalaffiModel.FK_LabTechnician_MedicaSpecializationType">
+      <End Role="MedicaSpecializationType" EntitySet="MedicaSpecializationTypes" />
+      <End Role="LabTechnician" EntitySet="LabTechnicians" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Test_LabTechnician" Association="MalaffiModel.FK_Test_LabTechnician">
+      <End Role="LabTechnician" EntitySet="LabTechnicians" />
+      <End Role="Test" EntitySet="Tests" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="LabTechnician">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="CommercialRegistrationNo" Type="Int32" Nullable="false" />
+    <Property Name="FullName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="MedicaSpecializationId" Type="Int32" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUser" Relationship="MalaffiModel.FK_LabTechnician_AspNetUsers" FromRole="LabTechnician" ToRole="AspNetUser" />
+    <NavigationProperty Name="MedicaSpecializationType" Relationship="MalaffiModel.FK_LabTechnician_MedicaSpecializationType" FromRole="LabTechnician" ToRole="MedicaSpecializationType" />
+    <NavigationProperty Name="Tests" Relationship="MalaffiModel.FK_Test_LabTechnician" FromRole="LabTechnician" ToRole="Test" />
+  </EntityType>
+  <Association Name="FK_LabTechnician_AspNetUsers">
+    <End Type="MalaffiModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+    <End Type="MalaffiModel.LabTechnician" Role="LabTechnician" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="LabTechnician">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LabTechnician_MedicaSpecializationType">
+    <End Type="MalaffiModel.MedicaSpecializationType" Role="MedicaSpecializationType" Multiplicity="1" />
+    <End Type="MalaffiModel.LabTechnician" Role="LabTechnician" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MedicaSpecializationType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="LabTechnician">
+        <PropertyRef Name="MedicaSpecializationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Test_LabTechnician">
+    <End Type="MalaffiModel.LabTechnician" Role="LabTechnician" Multiplicity="0..1" />
+    <End Type="MalaffiModel.Test" Role="Test" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LabTechnician">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Test">
+        <PropertyRef Name="LabTechnicianId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

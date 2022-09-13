@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a3d2d9413f2a4203803a47a7bae5c6a3" Name="Diagram1">
+        <EntityTypeShape EntityType="MalaffiModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MalaffiModel.AspNetRole" Width="1.5" PointX="0.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MalaffiModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MalaffiModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MalaffiModel.AspNetUser" Width="1.5" PointX="3" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MalaffiModel.Doctor" Width="1.5" PointX="5.25" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="MalaffiModel.MedicaSpecializationType" Width="1.5" PointX="6" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MalaffiModel.Medicine" Width="1.5" PointX="5.25" PointY="29.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MalaffiModel.MedicineRequest" Width="1.5" PointX="7.5" PointY="20.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MalaffiModel.Patient" Width="1.5" PointX="5.25" PointY="22.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MalaffiModel.Pharmacist" Width="1.5" PointX="5.25" PointY="25.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MalaffiModel.Review" Width="1.5" PointX="10.5" PointY="19.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MalaffiModel.sysdiagram" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MalaffiModel.Test" Width="1.5" PointX="10.5" PointY="14.875" IsExpanded="true" />
+        <AssociationConnector Association="MalaffiModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="MalaffiModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="MalaffiModel.FK_Doctor_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="MalaffiModel.FK_Patient_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="MalaffiModel.FK_Pharmacist_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="MalaffiModel.FK_Doctor_MedicaSpecializationType" ManuallyRouted="false" />
+        <AssociationConnector Association="MalaffiModel.FK_MedicineRequest_Doctor" ManuallyRouted="false" />
+        <AssociationConnector Association="MalaffiModel.FK_Review_Doctor" ManuallyRouted="false" />
+        <AssociationConnector Association="MalaffiModel.FK_Test_Doctor" ManuallyRouted="false" />
+        <AssociationConnector Association="MalaffiModel.FK_MedicineRequest_Medicine" ManuallyRouted="false" />
+        <AssociationConnector Association="MalaffiModel.FK_MedicineRequest_Patient" ManuallyRouted="false" />
+        <AssociationConnector Association="MalaffiModel.FK_MedicineRequest_Pharmacist" ManuallyRouted="false" />
+        <AssociationConnector Association="MalaffiModel.FK_Review_Patient" ManuallyRouted="false" />
+        <AssociationConnector Association="MalaffiModel.FK_Test_Patient" ManuallyRouted="false" />
+        <AssociationConnector Association="MalaffiModel.AspNetUserRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="MalaffiModel.LabTechnician" Width="1.5" PointX="8.25" PointY="10.75" />
+        <AssociationConnector Association="MalaffiModel.FK_LabTechnician_AspNetUsers" />
+        <AssociationConnector Association="MalaffiModel.FK_LabTechnician_MedicaSpecializationType" />
+        <AssociationConnector Association="MalaffiModel.FK_Test_LabTechnician" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,240 @@
+﻿@using Malaffi.Models
+@model LoginAndRegisterModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Malaffi | Login</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+    <link href="~/Content/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/assets/admin/pages/css/login.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/assets/global/plugins/bootstrap-datepicker/css/datepicker3.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/assets/global/plugins/bootstrap-colorpicker/css/colorpicker.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/assets/global/plugins/clockface/css/clockface.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" />
+    <link href="~/Content/assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css" />
+    <link href="~/Content/assets/global/css/plugins.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/assets/admin/layout/css/layout.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/assets/admin/layout/css/themes/darkblue.css" rel="stylesheet" type="text/css" id="style_color" />
+    <link href="~/Content/assets/admin/layout/css/custom.css" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" href="favicon.ico" />
+</head>
+<body class="login">
+    <div class="menu-toggler sidebar-toggler"></div>
+    <div class="logo">
+        <a href="index.html"><img src="~/Content/assets/admin/layout/img/logo-big.png" alt="" /></a>
+    </div>
+    <div class="content">
+        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "login-form", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <h3 class="form-title">Sign In</h3>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="alert alert-danger display-hide">
+                <button class="close" data-close="alert"></button>
+                <span>Enter any username and password.</span>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Login.Email, new { @class = "control-label visible-ie8 visible-ie9" })
+                @Html.TextBoxFor(m => m.Login.Email, new { @class = "form-control form-control-solid placeholder-no-fix", @placeholder = "Username" })
+                @Html.ValidationMessageFor(m => m.Login.Email, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Login.Password, new { @class = "control-label visible-ie8 visible-ie9" })
+                @Html.PasswordFor(m => m.Login.Password, new { @class = "form-control form-control-solid placeholder-no-fix", @placeholder = "Password" })
+                @Html.ValidationMessageFor(m => m.Login.Password, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-success uppercase">Login</button>
+            </div>
+            <div class="create-account">
+                <p><a href="javascript:;" id="register-btn" class="uppercase">Create an account</a></p>
+            </div>
+        }
+
+        @using (Html.BeginForm("Register", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "register-form", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <h3>Sign Up</h3>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Register.FullName, new { @class = "control-label visible-ie8 visible-ie9" })
+                @Html.TextBoxFor(m => m.Register.FullName, new { @class = "form-control form-control-solid placeholder-no-fix", @placeholder = "Full Name" })
+                @Html.ValidationMessageFor(m => m.Register.FullName, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label class="control-label visible-ie8 visible-ie9">Register Type</label>
+                <select id="RegisterType" name="RegisterType" class="form-control">
+                    <option value="0">Register Type</option>
+                    <option value="5">Patient</option>
+                    <option value="2">Doctor</option>
+                    <option value="3">LabTechnician</option>
+                    <option value="4">Pharmacist</option>
+                </select>
+                @Html.ValidationMessageFor(m => m.Register.RegisterType, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group" id="DoctorMedicaSpecializationTypes">
+                @Html.LabelFor(m => m.Register.MedicaSpecialization, new { @class = "control-label visible-ie8 visible-ie9" })
+                @Html.DropDownListFor(model => model.Register.MedicaSpecialization, ViewBag.DoctorMedicaSpecializationTypes as SelectList, new { @class = "form-control", @placeholder = "Medica Specialization" })
+                @Html.ValidationMessageFor(m => m.Register.MedicaSpecialization, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group" id="LabTechnicianMedicaSpecializationTypes">
+                @Html.LabelFor(m => m.Register.MedicaSpecialization, new { @class = "control-label visible-ie8 visible-ie9" })
+                @Html.DropDownListFor(model => model.Register.MedicaSpecialization, ViewBag.LabTechnicianMedicaSpecializationTypes as SelectList, new { @class = "form-control", @placeholder = "Medica Specialization" })
+                @Html.ValidationMessageFor(m => m.Register.MedicaSpecialization, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group" id="Address">
+                @Html.LabelFor(m => m.Register.Address, new { @class = "control-label visible-ie8 visible-ie9" })
+                @Html.TextBoxFor(m => m.Register.Address, new { @class = "form-control form-control-solid placeholder-no-fix", @placeholder = "Address" })
+                @Html.ValidationMessageFor(m => m.Register.Address, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group" id="CommercialRegistrationNo">
+                @Html.LabelFor(m => m.Register.CommercialRegistrationNo, new { @class = "control-label visible-ie8 visible-ie9" })
+                @Html.TextBoxFor(m => m.Register.CommercialRegistrationNo, new { @class = "form-control form-control-solid placeholder-no-fix", @placeholder = "Commercial Registration Number" })
+                @Html.ValidationMessageFor(m => m.Register.CommercialRegistrationNo, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group" id="NationalNumber">
+                @Html.LabelFor(m => m.Register.NationalNumber, new { @class = "control-label visible-ie8 visible-ie9" })
+                @Html.TextBoxFor(m => m.Register.NationalNumber, new { @class = "form-control form-control-solid placeholder-no-fix", @placeholder = "National Number" })
+                @Html.ValidationMessageFor(m => m.Register.NationalNumber, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group" id="Gender">
+                <label class="control-label visible-ie8 visible-ie9">Gender</label>
+                <select id="GenderType" name="GenderType" class="form-control">
+                    <option value="">Gender</option>
+                    <option value="1">Male</option>
+                    <option value="2">Female</option>
+                </select>
+                @Html.ValidationMessageFor(m => m.Register.RegisterType, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group" id="AssociationId">
+                @Html.LabelFor(m => m.Register.AssociationId, new { @class = "control-label visible-ie8 visible-ie9" })
+                @Html.TextBoxFor(m => m.Register.AssociationId, new { @class = "form-control form-control-solid placeholder-no-fix", @placeholder = "Association Number" })
+                @Html.ValidationMessageFor(m => m.Register.AssociationId, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Register.Email, new { @class = "control-label visible-ie8 visible-ie9" })
+                @Html.TextBoxFor(m => m.Register.Email, new { @class = "form-control form-control-solid placeholder-no-fix", @placeholder = "Email" })
+                @Html.ValidationMessageFor(m => m.Register.Email, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Register.Password, new { @class = "control-label visible-ie8 visible-ie9" })
+                @Html.PasswordFor(m => m.Register.Password, new { @class = "form-control form-control-solid placeholder-no-fix", @placeholder = "Password" })
+                @Html.ValidationMessageFor(m => m.Register.Password, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Register.ConfirmPassword, new { @class = "control-label visible-ie8 visible-ie9" })
+                @Html.PasswordFor(m => m.Register.ConfirmPassword, new { @class = "form-control form-control-solid placeholder-no-fix", @placeholder = "Password" })
+                @Html.ValidationMessageFor(m => m.Register.ConfirmPassword, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-actions">
+                <button type="button" id="register-back-btn" class="btn btn-default">Back</button>
+                <button type="submit" id="register-submit-btn" class="btn btn-success uppercase pull-right">Submit</button>
+            </div>
+        }
+    </div>
+    <div class="copyright">
+        2020 © Malaffi.
+    </div>
+    <script src="~/Content/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+    <script src="~/Content/assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+    <script src="~/Content/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="~/Content/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+    <script src="~/Content/assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+    <script src="~/Content/assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+    <script src="~/Content/assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="~/Content/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="~/Content/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="~/Content/assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
+    <script type="text/javascript" src="~/Content/assets/global/plugins/clockface/js/clockface.js"></script>
+    <script type="text/javascript" src="~/Content/assets/global/plugins/bootstrap-daterangepicker/moment.min.js"></script>
+    <script type="text/javascript" src="~/Content/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <script type="text/javascript" src="~/Content/assets/global/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+    <script type="text/javascript" src="~/Content/assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="~/Content/assets/global/scripts/metronic.js" type="text/javascript"></script>
+    <script src="~/Content/assets/admin/layout/scripts/layout.js" type="text/javascript"></script>
+    <script src="~/Content/assets/admin/layout/scripts/demo.js" type="text/javascript"></script>
+    <script src="~/Content/assets/admin/pages/scripts/login.js" type="text/javascript"></script>
+    <script>
+        jQuery(document).ready(function () {
+            Metronic.init(); // init metronic core components
+            Layout.init(); // init current layout
+            Login.init();
+            Demo.init();
+            $("#Gender").hide();
+            $("#NationalNumber").hide();
+            $("#AssociationId").hide();
+            $("#CommercialRegistrationNo").hide();
+            $("#DoctorMedicaSpecializationTypes").hide();
+            $("#LabTechnicianMedicaSpecializationTypes").hide();
+            $("#Address").hide();
+        });
+        $("#RegisterType").change(function () {
+            if ($("#RegisterType").val() == 5) {
+                $("#Address").hide();
+                $("#DoctorMedicaSpecializationTypes").hide();
+                $("#LabTechnicianMedicaSpecializationTypes").hide();
+                $("#CommercialRegistrationNo").hide();
+                $("#AssociationId").hide();
+                $("#NationalNumber").show();
+                $("#Gender").show();
+            }
+            if ($("#RegisterType").val() == 2) {
+                $("#Address").hide();
+                $("#CommercialRegistrationNo").hide();
+                $("#Gender").hide();
+                $("#NationalNumber").hide();
+                $("#DoctorMedicaSpecializationTypes").show();
+                $("#LabTechnicianMedicaSpecializationTypes").hide();
+                $("#AssociationId").show();
+            }
+            if ($("#RegisterType").val() == 3) {
+                $("#Address").show();
+                $("#DoctorMedicaSpecializationTypes").hide();
+                $("#LabTechnicianMedicaSpecializationTypes").show();
+                $("#CommercialRegistrationNo").show();
+                $("#Gender").hide();
+                $("#NationalNumber").hide();
+                $("#AssociationId").hide();
+            }
+            if ($("#RegisterType").val() == 4) {
+                $("#Address").show();
+                $("#DoctorMedicaSpecializationTypes").hide();
+                $("#LabTechnicianMedicaSpecializationTypes").hide();
+                $("#CommercialRegistrationNo").show();
+                $("#Gender").hide();
+                $("#NationalNumber").hide();
+                $("#AssociationId").hide();
+            }
+            if ($("#RegisterType").val() == 0) {
+                $("#Address").hide();
+                $("#DoctorMedicaSpecializationTypes").hide();
+                $("#LabTechnicianMedicaSpecializationTypes").hide();
+                $("#CommercialRegistrationNo").hide();
+                $("#Gender").hide();
+                $("#NationalNumber").hide();
+                $("#AssociationId").hide();
+            }
+        });
+    </script>
+</body>
+</html>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
