@@ -1,0 +1,10 @@
+C:\Users\admin\Desktop\Laith\Malaffi_Project\Malaffi\Malaffi.Storage\bin\Debug\Malaffi.Storage.dll
+C:\Users\admin\Desktop\Laith\Malaffi_Project\Malaffi\Malaffi.Storage\bin\Debug\Malaffi.Storage.pdb
+C:\Users\admin\Desktop\Laith\Malaffi_Project\Malaffi\Malaffi.Storage\obj\Debug\Malaffi.Storage.csproj.CoreCompileInputs.cache
+C:\Users\admin\Desktop\Laith\Malaffi_Project\Malaffi\Malaffi.Storage\obj\Debug\Malaffi.Storage.dll
+C:\Users\admin\Desktop\Laith\Malaffi_Project\Malaffi\Malaffi.Storage\obj\Debug\Malaffi.Storage.pdb
+C:\Users\Dell\Desktop\Malaffi\Malaffi.Storage\bin\Debug\Malaffi.Storage.dll
+C:\Users\Dell\Desktop\Malaffi\Malaffi.Storage\bin\Debug\Malaffi.Storage.pdb
+C:\Users\Dell\Desktop\Malaffi\Malaffi.Storage\obj\Debug\Malaffi.Storage.csproj.CoreCompileInputs.cache
+C:\Users\Dell\Desktop\Malaffi\Malaffi.Storage\obj\Debug\Malaffi.Storage.dll
+C:\Users\Dell\Desktop\Malaffi\Malaffi.Storage\obj\Debug\Malaffi.Storage.pdb
